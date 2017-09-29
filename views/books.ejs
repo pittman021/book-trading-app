@@ -1,0 +1,23 @@
+<%  include partials/header.ejs %>
+
+  <h1> Welcome to the Books App</h1>
+
+  <h2> All Books</h2>
+  <div class="container">
+    <div class="row">
+    <% books.forEach(book => { %>
+      <div class="book col-sm-6 col-md-3 col-lg-2">
+      <!-- <p><%= book.title %></p> -->
+      <img src=<%= book.image %></img>
+      <% if(book.owner != currentUser.id) { %>
+      <form action="/books/<%= book.id %>/borrow" method="POST">
+        <input type="hidden" value="id" name="<%= book.id %>"></input>
+        <input class="btn btn-primary" type="submit" value="borrow">
+      </form>
+      <% } %>
+    </div>
+  <%  }); %>
+</div>
+</div>
+
+<% include partials/footer.ejs %>

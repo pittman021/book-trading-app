@@ -1,0 +1,11 @@
+<%  include partials/header.ejs %>
+
+<form class="pure-form" action="/user/?method=PUT" method="POST">
+  <fieldset>
+        <label for="city">City</label>
+        <input id="city" type="text" name="city" placeholder="<%= currentUser.city %>" />
+        <label for="state">State</label>
+        <input id="state" type="text" name="state" placeholder="<%= currentUser.state %>" />
+        <button class="pure-button pure-button-primary" type="submit">Update</button>
+  </fieldset>
+</form>

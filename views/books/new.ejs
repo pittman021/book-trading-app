@@ -1,0 +1,32 @@
+<%  include ../partials/header.ejs %>
+
+  <h3>Book Search</h3>
+  <hr>
+  <div class="content">
+  <form class="form-group" action="/books/search" method="POST">
+      <label for="title">Book Title</label>
+      <input class="form-control" id="title" type="text" name="title" />
+      <button class="btn btn-primary" type="submit">Search</button>
+  </form>
+</div>
+<div class="results">
+  <div class="row">
+    <% if (books.length > 0){ %>
+    <% books.forEach(book => { %>
+      <div class="book col-md-4 col-lg-2" id="<%= book.id %>">
+        <p><%= book.title %><p>
+        <img src=<%= book.image %></img>
+          <form action="/books" method="POST">
+            <input type="hidden" value="<%= book.id %>" name="id">
+            <input type="hidden" value="<%= book.title %>" name="name">
+            <input type="hidden" value="<%= book.image %>" name="image">
+            <input class="btn btn-primary" type="submit" value="add">
+          </form>
+      </div>
+    <% }); } %>
+  </div>
+</div>
+</body>
+</html>
+
+<%  include ../partials/footer.ejs %>

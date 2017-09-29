@@ -1,0 +1,79 @@
+<% include ../partials/header.ejs %>
+
+<h1> Your Books </h1>
+
+<div class="bookinfo container">
+  <div class="row">
+    <div class="col-md-6 col-lg-6">
+      <h3>My Borrow Requests</h3>
+        <ul class="list-group">
+        <% borrowRequest.forEach(req => { %>
+        <%  if(req.status === "Pending") { %>
+           <li class="list-group-item">
+              <%= req.book.title%>: <%= req.status %>
+              <div class="form-actions">
+                <div class="form">
+              <form method="POST" action="/swap/<%=req._id%>?_method=DELETE">
+              <input type="submit" class="btn btn-primary" value="Cancel"></input>
+            </form>
+          </li>
+        </div>
+      </div>
+
+      <% } else { %>
+        <li class="list-group-item">
+           <%= req.book.title%>: <%= req.status %>
+           <form method="POST" action="/swap/<%=req._id%>?_method=DELETE">
+           <input type="submit" class="btn btn-primary" value="Return"></input>
+         </form>
+       </li>
+       <% } %>
+    <%  }); %>
+    </div>
+    <div class="col-md-6 col-lg-6">
+      <h3>Lend Requests</h3>
+          <ul class="list-group">
+          <% lendRequest.forEach(req => { %>
+          <%  if(req.status === "Pending") { %>
+             <li class="list-group-item">
+                <%= req.book.title%>: <%= req.status %>
+                <div class="form-actions">
+                <div class="form">
+                <form method="POST" action="/swap/<%=req._id%>/accept">
+                  <input type="submit" class="btn btn-primary" value="Accept"></input>
+                </form>
+              </div>
+              <div class="form">
+                <form method="POST" action="/swap/<%=req._id%>/reject">
+                  <input type="submit" class="btn btn-primary" value="Reject"></input>
+                </form>
+              </div>
+            </li>
+        <% } else {  %>
+          <li class="list-group-item">
+             <%= req.book.title%>: <%= req.status %>
+         </li>
+         <% } %>
+      <%  }); %>
+      </div>
+    </div>
+    </div>
+
+</ul>
+<hr>
+<h2>Your Books</h2>
+<div class="row">
+  <% books.forEach(book => { %>
+    <div id="<%= book.id %>" class="book col-sm-6 col-md-3 col-lg-2">
+    <img src=<%= book.image %>></img><br>
+    <% if(book.owner != currentUser.id) { %>
+    <form action="/books/<%= book.id %>/borrow" method="POST">
+      <input type="hidden" value="id" name="<%= book.id %>"></input>
+      <input class="btn btn-primary" type="submit" value="borrow">
+    </form>
+    <% } %>
+  </div>
+<%  }); %>
+</div>
+
+<% include ../partials/footer.ejs %>
