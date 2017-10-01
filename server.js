@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const User = require('./models/User');
 const seedDb = require('./seed');
 const methodOverride = require('method-override');
-const keys = require('./config/auth');
+const keys = require('./config/keys');
 
 const app = express();
 
@@ -35,7 +35,6 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 // MONGOOSE  //
-
 mongoose.connect(keys.mongo_URI);
 
 require('./routes/index')(app);
