@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const User = require('./models/User');
 const seedDb = require('./seed');
 const methodOverride = require('method-override');
+const keys = require('./config/auth');
 
 const app = express();
 
@@ -33,9 +34,9 @@ app.use(methodOverride('_method'));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-// MONGOOSE -- Set this up //
+// MONGOOSE  //
 
-mongoose.connect('mongodb://user:pass@ds141454.mlab.com:41454/books-dev');
+mongoose.connect(keys.mongo_URI);
 
 require('./routes/index')(app);
 require('./routes/Books')(app);
@@ -43,7 +44,7 @@ require('./routes/Auth')(app);
 require('./routes/User')(app);
 require('./routes/Swap')(app);
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log('server started');
 });
